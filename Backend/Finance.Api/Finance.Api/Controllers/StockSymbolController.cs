@@ -1,5 +1,6 @@
 ﻿using Finance.Api.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.CompilerServices;
 
 namespace Finance.Api.Controllers;
 
@@ -7,53 +8,52 @@ namespace Finance.Api.Controllers;
 [ApiController]
 public class StockSymbolController(IHttpClientFactory factory, IConfiguration configuration) : ControllerBase
 {
+    private readonly string? apiKey = configuration["FinancialData:ApiKey"];
+    private readonly HttpClient client = factory.CreateClient("get stock symbols");
+    
     [HttpGet("GetAll")]
-    public async Task<IEnumerable<StockDetail>?> GetAll()
-    {
-        var client = factory.CreateClient("get all stock symbols");
+    public async Task<IActionResult> GetAll()
+    {   
+        if (string.IsNullOrWhiteSpace(apiKey))
+            return Problem("FinancialData API key is missing. Set FinancialData:ApiKey.", statusCode: 500);
 
-        var requestUriWithApiKey = $"https://financialdata.net/api/v1/stock-symbols?key={configuration.GetValue<string>("FinancialDataApiKey")}";
+        var result = await client.GetFromJsonAsync<IEnumerable<StockDetail>>(requestUri: $"https://financialdata.net/api/v1/stock-symbols?key={apiKey}");         
 
-        return await client.GetFromJsonAsync<IEnumerable<StockDetail>>(requestUri: requestUriWithApiKey);         
+        return Ok(result);
     }
 
     [HttpGet("GetInternationalSymbols")]
-    public async Task<IEnumerable<StockDetail>?> GetInternationalSymbols()
+    public async Task<IActionResult> GetInternationalSymbols()
     {
-        var client = factory.CreateClient("get international symbols");
+        if (string.IsNullOrWhiteSpace(apiKey))
+            return Problem("FinancialData API key is missing. Set FinancialData:ApiKey.", statusCode: 500);
 
-        var requestUriWithApiKey = $"https://financialdata.net/api/v1/international-stock-symbols?key={configuration.GetValue<string>("FinancialDataApiKey")}";
+        var result = await client.GetFromJsonAsync<IEnumerable<StockDetail>>(requestUri: $"https://financialdata.net/api/v1/international-stock-symbols?key={apiKey}");
 
-        return await client.GetFromJsonAsync<IEnumerable<StockDetail>>(requestUri: requestUriWithApiKey);
+        return Ok(result);
     }
 
     [HttpGet("GetEtfSymbols")]
-    public async Task<IEnumerable<StockDetail>?> GetEtfSymbols()
+    public async Task<IActionResult> GetEtfSymbols()
     {
-        var client = factory.CreateClient("get Etf symbols");
+        var result = await client.GetFromJsonAsync<IEnumerable<StockDetail>>(requestUri: $"https://financialdata.net/api/v1/etf-symbols?key={apiKey}");
 
-        var requestUriWithApiKey = $"https://financialdata.net/api/v1/etf-symbols?key={configuration.GetValue<string>("FinancialDataApiKey")}";
-
-        return await client.GetFromJsonAsync<IEnumerable<StockDetail>>(requestUri: requestUriWithApiKey);
+        return Ok(result);
     }
 
     [HttpGet("GetCommoditySymbols")]
-    public async Task<IEnumerable<StockDetail>?> GetCommoditySymbols()
+    public async Task<IActionResult> GetCommoditySymbols()
     {
-        var client = factory.CreateClient("get commodity symbols");
+        var result = await client.GetFromJsonAsync<IEnumerable<StockDetail>>(requestUri: $"https://financialdata.net/api/v1/commodity-symbols?key={apiKey}");
 
-        var requestUriWithApiKey = $"https://financialdata.net/api/v1/commodity-symbols?key={configuration.GetValue<string>("FinancialDataApiKey")}";
-
-        return await client.GetFromJsonAsync<IEnumerable<StockDetail>>(requestUri: requestUriWithApiKey);
+        return Ok(result);
     }
 
     [HttpGet("GetOverTheCounterSymbols")]
-    public async Task<IEnumerable<StockDetail>?> GetOverTheCounterSymbols()
+    public async Task<IActionResult> GetOverTheCounterSymbols()
     {
-        var client = factory.CreateClient("get OTC symbols");
-
-        var requestUriWithApiKey = $"https://financialdata.net/api/v1/commodity-symbols?key={configuration.GetValue<string>("FinancialDataApiKey")}";
-
-        return await client.GetFromJsonAsync<IEnumerable<StockDetail>>(requestUri: requestUriWithApiKey);
+        var result = await client.GetFromJsonAsync<IEnumerable<StockDetail>>(requestUri: $"https://financialdata.net/api/v1/commodity-symbols?key={apiKey}");
+        
+        return Ok(result);
     }
 }

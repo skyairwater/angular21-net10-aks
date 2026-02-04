@@ -1,0 +1,16 @@
+services:
+  api:
+    build:
+      context: ./Backend/Finance.Api/Finance.Api
+    ports:
+      - "8080:8080"
+    environment:
+      - FinancialData__Apikey=${FINANCIALDATA_API_KEY}      
+
+  ui:
+    build:
+      context: ./Frontend/finance-ui
+    ports:
+      - "4200:80"
+    depends_on:
+      - api
