@@ -1,42 +1,67 @@
-import { Component, signal, inject } from '@angular/core';
+import { Component, computed, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, of } from 'rxjs';
+
+import { FinanceService } from '../../services/finance.service';
+import { StockDetail } from '../../models/stock-detail';
 
 @Component({
   standalone: true,
   imports: [CommonModule],
-  template: `
-    <div class="container py-4">
-      <h2>Stock Symbols</h2>
-
-      <div *ngIf="error()" class="alert alert-danger">
-        {{ error() }}
-      </div>
-
-      <div *ngIf="!error()">
-        <div class="alert alert-info">
-          <b>Items:</b> {{ symbols().length }}
-        </div>
-
-        <pre class="p-3 border rounded bg-light">{{ symbols() | json }}</pre>
-      </div>
-    </div>
-  `
+  templateUrl: './stock-symbols.html'
 })
 export class StockSymbols {
-  private http = inject(HttpClient);
+  private service = inject(FinanceService);
 
   error = signal<string | null>(null);
 
-  symbols = toSignal(
-    this.http.get<any[]>('https://localhost:7112/api/StockSymbol/GetAll').pipe(
+  // pagination state
+  pageSize = signal(10);
+  page = signal(1); // 1-based
+
+  // full dataset (loaded once)
+  allSymbols = toSignal(
+    this.service.stockSymbolGetAll().pipe(
       catchError((err) => {
-        this.error.set(`${err.status} ${err.statusText || 'Error'}`.trim());
-        return of([]);
+        console.error(err);
+        this.error.set('Failed to load stock symbols.');
+        return of([] as StockDetail[]);
       })
     ),
-    { initialValue: [] }
+    { initialValue: [] as StockDetail[] }
   );
+
+  totalItems = computed(() => this.allSymbols().length);
+
+  totalPages = computed(() => {
+    const size = this.pageSize();
+    const total = this.totalItems();
+    return Math.max(1, Math.ceil(total / size));
+  });
+
+  pagedSymbols = computed(() => {
+    const items = this.allSymbols();
+    const size = this.pageSize();
+    const currentPage = this.page();
+
+    const start = (currentPage - 1) * size;
+    return items.slice(start, start + size);
+  });
+
+  canPrev = computed(() => this.page() > 1);
+  canNext = computed(() => this.page() < this.totalPages());
+
+  prev(): void {
+    if (this.canPrev()) this.page.set(this.page() - 1);
+  }
+
+ next(): void {
+    if (this.canNext()) this.page.set(this.page() + 1);
+  }
+
+  goTo(p: number): void {
+    const clamped = Math.min(Math.max(1, p), this.totalPages());
+    this.page.set(clamped);
+  }
 }

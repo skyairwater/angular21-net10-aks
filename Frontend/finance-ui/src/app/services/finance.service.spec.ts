@@ -1,18 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment.development';
 import { StockDetail } from '../models/stock-detail';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FinanceService {
-  private readonly baseUrl = environment.apiBaseUrl;
-
-  constructor(private http: HttpClient) {}
+  private http = inject(HttpClient);
+  private baseUrl = environment.apiBaseUrl;
 
   getAll(): Observable<StockDetail[]> {
-    return this.http.get<StockDetail[]>(`${this.baseUrl}/api/StockDetail/GetAll`);
+    return this.http.get<StockDetail[]>(`${this.baseUrl}/api/StockSymbol/GetAll`);
   }
 }

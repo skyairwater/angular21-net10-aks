@@ -1,5 +1,6 @@
 export interface StockDetail {
-  id?: number;        // keep optional until we confirm fields
-  symbol?: string;
-  name?: string;
+  trading_symbol: string;
+  registrant_name: string;
+  description: string;
+  title_of_security: string;  
 }
