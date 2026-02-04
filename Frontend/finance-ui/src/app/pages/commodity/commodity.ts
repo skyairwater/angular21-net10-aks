@@ -7,12 +7,11 @@ import { FinanceService } from '../../services/finance.service';
 import { StockDetail } from '../../models/stock-detail';
 
 @Component({
-  selector: 'app-otc-symbols',
+  selector: 'app-commodity',
   imports: [CommonModule],
-  templateUrl: './otc-symbols.html',
-  styleUrl: './otc-symbols.scss',
+  templateUrl: './commodity.html'
 })
-export class OtcSymbols {
+export class Commodity {
 private service = inject(FinanceService);
 
   error = signal<string | null>(null);
@@ -23,10 +22,10 @@ private service = inject(FinanceService);
 
   // full dataset (loaded once)
   allSymbols = toSignal(
-    this.service.getOverTheCounterSymbols().pipe(
+    this.service.getCommoditySymbols().pipe(
       catchError((err) => {
         console.error(err);
-        this.error.set('Failed to load OTC symbols.');
+        this.error.set('Failed to load commodity symbols.');
         return of([] as StockDetail[]);
       })
     ),

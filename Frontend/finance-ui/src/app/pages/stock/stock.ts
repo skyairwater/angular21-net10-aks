@@ -9,7 +9,7 @@ import { StockDetail } from '../../models/stock-detail';
 @Component({
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './stock-symbols.html'
+  templateUrl: './stock.html'
 })
 export class StockSymbols {
   private service = inject(FinanceService);

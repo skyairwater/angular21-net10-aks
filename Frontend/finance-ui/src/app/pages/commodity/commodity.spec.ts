@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OtcSymbols } from './otc-symbols';
+import { CommoditySymbols } from './commodity';
 
-describe('OtcSymbols', () => {
-  let component: OtcSymbols;
-  let fixture: ComponentFixture<OtcSymbols>;
+describe('CommoditySymbols', () => {
+  let component: CommoditySymbols;
+  let fixture: ComponentFixture<CommoditySymbols>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [OtcSymbols]
+      imports: [CommoditySymbols]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(OtcSymbols);
+    fixture = TestBed.createComponent(CommoditySymbols);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EtfSymbols } from './etf-symbols';
+import { EtfSymbols } from './etf';
 
 describe('EtfSymbols', () => {
   let component: EtfSymbols;

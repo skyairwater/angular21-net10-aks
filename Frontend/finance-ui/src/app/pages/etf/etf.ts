@@ -7,12 +7,12 @@ import { FinanceService } from '../../services/finance.service';
 import { StockDetail } from '../../models/stock-detail';
 
 @Component({
-  selector: 'app-international-symbols',
+  selector: 'app-etf',
   imports: [CommonModule],
-  templateUrl: './international-symbols.html',
-  styleUrl: './international-symbols.scss',
+  templateUrl: './etf.html'
+  
 })
-export class InternationalSymbols {
+export class Etf {
 private service = inject(FinanceService);
 
   error = signal<string | null>(null);
@@ -23,10 +23,10 @@ private service = inject(FinanceService);
 
   // full dataset (loaded once)
   allSymbols = toSignal(
-    this.service.getInternationalSymbols().pipe(
+    this.service.getEtfSymbols().pipe(
       catchError((err) => {
         console.error(err);
-        this.error.set('Failed to load international symbols.');
+        this.error.set('Failed to load ETF symbols.');
         return of([] as StockDetail[]);
       })
     ),

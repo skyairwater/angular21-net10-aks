@@ -7,12 +7,11 @@ import { FinanceService } from '../../services/finance.service';
 import { StockDetail } from '../../models/stock-detail';
 
 @Component({
-  selector: 'app-commodity-symbols',
+  selector: 'app-international',
   imports: [CommonModule],
-  templateUrl: './commodity-symbols.html',
-  styleUrl: './commodity-symbols.scss',
+  templateUrl: './international.html'
 })
-export class CommoditySymbols {
+export class International {
 private service = inject(FinanceService);
 
   error = signal<string | null>(null);
@@ -23,10 +22,10 @@ private service = inject(FinanceService);
 
   // full dataset (loaded once)
   allSymbols = toSignal(
-    this.service.getCommoditySymbols().pipe(
+    this.service.getInternationalSymbols().pipe(
       catchError((err) => {
         console.error(err);
-        this.error.set('Failed to load commodity symbols.');
+        this.error.set('Failed to load international symbols.');
         return of([] as StockDetail[]);
       })
     ),

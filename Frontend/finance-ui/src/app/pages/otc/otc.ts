@@ -7,12 +7,11 @@ import { FinanceService } from '../../services/finance.service';
 import { StockDetail } from '../../models/stock-detail';
 
 @Component({
-  selector: 'app-etf-symbols',
+  selector: 'app-otc',
   imports: [CommonModule],
-  templateUrl: './etf-symbols.html',
-  styleUrl: './etf-symbols.scss',
+  templateUrl: './otc.html'
 })
-export class EtfSymbols {
+export class OtcSymbols {
 private service = inject(FinanceService);
 
   error = signal<string | null>(null);
@@ -23,10 +22,10 @@ private service = inject(FinanceService);
 
   // full dataset (loaded once)
   allSymbols = toSignal(
-    this.service.getEtfSymbols().pipe(
+    this.service.getOverTheCounterSymbols().pipe(
       catchError((err) => {
         console.error(err);
-        this.error.set('Failed to load ETF symbols.');
+        this.error.set('Failed to load OTC symbols.');
         return of([] as StockDetail[]);
       })
     ),

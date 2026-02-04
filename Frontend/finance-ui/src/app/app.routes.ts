@@ -13,30 +13,30 @@ export const routes: Routes = [
   {
     path: 'stock',
     loadComponent: () =>
-      import('./pages/stock-symbols/stock-symbols').then(m => m.StockSymbols)
+      import('./pages/stock/stock').then(m => m.StockSymbols)
   },
 
   {
     path: 'international',
     loadComponent: () =>
-      import('./pages/international-symbols/international-symbols').then(m => m.InternationalSymbols)
+      import('./pages/international/international').then(m => m.International)
   },
   
   {
     path: 'commodity',
     loadComponent: () =>
-      import('./pages/commodity-symbols/commodity-symbols').then(m => m.CommoditySymbols)
+      import('./pages/commodity/commodity').then(m => m.Commodity)
   },
 
   {
     path: 'etf',
     loadComponent: () =>
-      import('./pages/etf-symbols/etf-symbols').then(m => m.EtfSymbols)
+      import('./pages/etf/etf').then(m => m.Etf)
   },
 
   {
     path: 'otc',
     loadComponent: () =>
-      import('./pages/otc-symbols/otc-symbols').then(m => m.OtcSymbols)
+      import('./pages/otc/otc').then(m => m.OtcSymbols)
   }
 ];
