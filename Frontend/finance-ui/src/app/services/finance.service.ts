@@ -11,22 +11,22 @@ export class FinanceService
     private http = inject(HttpClient);    
 
     stockSymbolGetAll(): Observable<any> {
-      return this.http.get(`${environment.apiBaseUrl}GetAll`);
+      return this.http.get(`${environment.apiBaseUrl}/api/StockSymbol/GetAll`);
     }
 
     getInternationalSymbols(): Observable<any> {
-      return this.http.get(`${environment.apiBaseUrl}GetInternationalSymbols`);
+      return this.http.get(`${environment.apiBaseUrl}/api/StockSymbol/GetInternationalSymbols`);
     }
 
      getEtfSymbols(): Observable<any> {
-      return this.http.get(`${environment.apiBaseUrl}GetEtfSymbols`);
+      return this.http.get(`${environment.apiBaseUrl}/api/StockSymbol/GetEtfSymbols`);
     }
 
      getCommoditySymbols(): Observable<any> {
-      return this.http.get(`${environment.apiBaseUrl}GetCommoditySymbols`);
+      return this.http.get(`${environment.apiBaseUrl}/api/StockSymbol/GetCommoditySymbols`);
     }
 
      getOverTheCounterSymbols(): Observable<any> {
-      return this.http.get(`${environment.apiBaseUrl}GetOverTheCounterSymbols`);
+      return this.http.get(`${environment.apiBaseUrl}/api/StockSymbol/GetOverTheCounterSymbols`);
     }
 }
