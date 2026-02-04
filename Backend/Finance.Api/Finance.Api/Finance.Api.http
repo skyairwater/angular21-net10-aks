@@ -5,8 +5,28 @@ Accept: application/json
 
 ###
 
-GET {{Finance.Api_HostAddress}}/api/StockSymbol/
+GET {{Finance.Api_HostAddress}}/api/StockSymbol/GetAll
 Accept: application/json
 
+
+###
+
+GET {{Finance.Api_HostAddress}}/api/StockSymbol/GetInternationalSymbols
+Accept: application/json
+
+###
+
+GET {{Finance.Api_HostAddress}}/api/StockSymbol/GetEtfSymbols
+Accept: application/json
+
+###
+
+GET {{Finance.Api_HostAddress}}/api/StockSymbol/GetCommoditySymbols
+Accept: application/json
+
+###
+
+GET {{Finance.Api_HostAddress}}/api/StockSymbol/GetOverTheCounterSymbols
+Accept: application/json
 
 ###
