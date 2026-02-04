@@ -1,7 +1,15 @@
 <div class="container py-4">
-  <div class="p-4 mb-4 bg-light rounded-3">
-    <h1 class="display-6">Angular 21 + Bootstrap</h1>
-    <p class="lead">Bootstrap is working if this looks styled.</p>
-    <button class="btn btn-primary">Test Button</button>
+  <h2 class="mb-3">Stock Symbols</h2>
+
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <div *ngIf="symbols.length === 0 && !error" class="alert alert-warning">
+    No data found (array is empty).
   </div>
+
+  <ul class="list-group" *ngIf="symbols.length > 0">
+    <li class="list-group-item" *ngFor="let s of symbols">
+      {{ s | json }}
+    </li>
+  </ul>
 </div>

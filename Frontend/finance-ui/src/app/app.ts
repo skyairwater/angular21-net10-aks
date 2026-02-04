@@ -1,12 +1,31 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { NgIf, JsonPipe, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [NgIf, NgFor, JsonPipe],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
 })
-export class App {
-  protected readonly title = signal('finance-ui');
+export class App implements OnInit {
+  symbols: any[] = [];
+  error: string | null = null;
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.http
+      .get<any[]>('https://localhost:7112/api/StockSymbol/GetAll')
+      .subscribe({
+        next: (res) => {
+          this.symbols = res ?? [];
+          console.log('Symbols:', this.symbols);
+        },
+        error: (err) => {
+          this.error = 'Failed to load data';
+          console.error(err);
+        },
+      });
+  }
 }
