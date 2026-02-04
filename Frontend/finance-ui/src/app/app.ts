@@ -1,31 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { NgIf, JsonPipe, NgFor } from '@angular/common';
+import { Component } from '@angular/core';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [NgIf, NgFor, JsonPipe],
-  templateUrl: './app.html',
+  imports: [RouterOutlet, RouterLink],
+  template: `
+    <div class="container py-4">
+      <h1 class="mb-3">My App</h1>
+
+      <a class="btn btn-outline-primary me-2" routerLink="/stocks">Stocks</a>
+      <a class="btn btn-outline-secondary" routerLink="/">Home</a>
+
+      <hr class="my-4" />
+
+      <router-outlet></router-outlet>
+    </div>
+  `
 })
-export class App implements OnInit {
-  symbols: any[] = [];
-  error: string | null = null;
-
-  constructor(private http: HttpClient) {}
-
-  ngOnInit(): void {
-    this.http
-      .get<any[]>('https://localhost:7112/api/StockSymbol/GetAll')
-      .subscribe({
-        next: (res) => {
-          this.symbols = res ?? [];
-          console.log('Symbols:', this.symbols);
-        },
-        error: (err) => {
-          this.error = 'Failed to load data';
-          console.error(err);
-        },
-      });
-  }
-}
+export class App {}

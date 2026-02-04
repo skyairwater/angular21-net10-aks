@@ -1,16 +1,18 @@
-import { TestBed } from '@angular/core/testing';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { StockDetail } from '../models/stock-detail';
 
-import { FinanceService } from './finance.service';
+@Injectable({
+  providedIn: 'root'
+})
+export class FinanceService {
+  private readonly baseUrl = environment.apiBaseUrl;
 
-describe('FinanceService', () => {
-  let service: FinanceService;
+  constructor(private http: HttpClient) {}
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(FinanceService);
-  });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-});
+  getAll(): Observable<StockDetail[]> {
+    return this.http.get<StockDetail[]>(`${this.baseUrl}/api/StockDetail/GetAll`);
+  }
+}
