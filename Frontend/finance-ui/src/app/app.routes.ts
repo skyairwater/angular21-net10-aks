@@ -11,16 +11,32 @@ export const routes: Routes = [
   },
 
   {
-    path: 'stocksymbols',
+    path: 'stock',
     loadComponent: () =>
       import('./pages/stock-symbols/stock-symbols').then(m => m.StockSymbols)
   },
 
   {
-    path: 'internationalsymbols',
+    path: 'international',
     loadComponent: () =>
       import('./pages/international-symbols/international-symbols').then(m => m.InternationalSymbols)
   },
-
   
+  {
+    path: 'commodity',
+    loadComponent: () =>
+      import('./pages/commodity-symbols/commodity-symbols').then(m => m.CommoditySymbols)
+  },
+
+  {
+    path: 'etf',
+    loadComponent: () =>
+      import('./pages/etf-symbols/etf-symbols').then(m => m.EtfSymbols)
+  },
+
+  {
+    path: 'otc',
+    loadComponent: () =>
+      import('./pages/otc-symbols/otc-symbols').then(m => m.OtcSymbols)
+  }
 ];
