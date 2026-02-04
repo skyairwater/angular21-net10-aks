@@ -1,16 +1,32 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class FinanceService {
-  private url = 'https://localhost:7112/api/StockSymbol/GetAll';
 
-  constructor(private http: HttpClient) {}
+export class FinanceService 
+{
+    private http = inject(HttpClient);    
 
-  stockSymbolGetAll(): Observable<any> {
-    return this.http.get(this.url);
-  }
+    stockSymbolGetAll(): Observable<any> {
+      return this.http.get(`${environment.apiBaseUrl}GetAll`);
+    }
+
+    getInternationalSymbols(): Observable<any> {
+      return this.http.get(`${environment.apiBaseUrl}GetInternationalSymbols`);
+    }
+
+     getEtfSymbols(): Observable<any> {
+      return this.http.get(`${environment.apiBaseUrl}GetEtfSymbols`);
+    }
+
+     getCommoditySymbols(): Observable<any> {
+      return this.http.get(`${environment.apiBaseUrl}GetCommoditySymbols`);
+    }
+
+     getOverTheCounterSymbols(): Observable<any> {
+      return this.http.get(`${environment.apiBaseUrl}GetOverTheCounterSymbols`);
+    }
 }

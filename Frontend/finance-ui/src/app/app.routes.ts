@@ -14,5 +14,13 @@ export const routes: Routes = [
     path: 'stocksymbols',
     loadComponent: () =>
       import('./pages/stock-symbols/stock-symbols').then(m => m.StockSymbols)
-  }
+  },
+
+  {
+    path: 'internationalsymbols',
+    loadComponent: () =>
+      import('./pages/international-symbols/international-symbols').then(m => m.InternationalSymbols)
+  },
+
+  
 ];
