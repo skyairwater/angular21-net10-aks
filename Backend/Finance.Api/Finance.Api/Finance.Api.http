@@ -4,3 +4,9 @@ GET {{Finance.Api_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+GET {{Finance.Api_HostAddress}}/api/StockSymbol/
+Accept: application/json
+
+
+###
