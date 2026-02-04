@@ -19,10 +19,12 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    //Why: In Docker we’ll run HTTP only, so HTTPS redirection would break requests.
+    app.UseHttpsRedirection();
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
+
 
 app.UseAuthorization();
 
